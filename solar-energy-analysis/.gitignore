@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
+backend/data/cleaned_solar_energy.csv
+backend/outputs/
+backend/models/xgboost_model.json
+backend/models/encoders.json
+*.DS_Store

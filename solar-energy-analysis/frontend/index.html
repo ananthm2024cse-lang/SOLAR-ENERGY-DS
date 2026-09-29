@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solar Energy Analysis Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="solar-icon">☀️</span>
+      <span class="sidebar-title">SolarDS</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#summary"      class="nav-link active">📊 Summary</a></li>
+      <li><a href="#generation"   class="nav-link">📈 Generation Trends</a></li>
+      <li><a href="#installations"class="nav-link">🏭 Installations</a></li>
+      <li><a href="#weather"      class="nav-link">🌤️ Weather Analysis</a></li>
+      <li><a href="#anomalies"    class="nav-link">⚠️ Anomalies</a></li>
+      <li><a href="#model"        class="nav-link">🤖 ML Model</a></li>
+      <li><a href="#predict"      class="nav-link">🔮 Predict</a></li>
+      <li><a href="#data-quality" class="nav-link">🧹 Data Quality</a></li>
+      <li><a href="#insights"     class="nav-link">💡 Insights</a></li>
+    </ul>
+    <button class="refresh-btn" onclick="loadAll()">🔄 Refresh</button>
+  </nav>
+
+  <!-- Main content -->
+  <main class="main-content">
+    <!-- Header -->
+    <header class="top-header">
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <div class="header-title">
+        <span class="solar-icon">☀️</span>
+        <h1>Solar Energy — Which Days Will Produce Less Power?</h1>
+      </div>
+      <span class="dataset-badge">📁 Sample Dataset · 2023</span>
+    </header>
+
+    <!-- Loading overlay -->
+    <div id="loading" class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Loading dashboard data…</p>
+    </div>
+
+    <!-- ── SUMMARY CARDS ── -->
+    <section id="summary" class="section">
+      <h2 class="section-title">📊 Summary Overview</h2>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">⚡</div><div class="card-label">Total Energy Generated</div><div class="card-value" id="c-total">—</div><div class="card-unit">kWh</div></div>
+        <div class="card"><div class="card-icon">📊</div><div class="card-label">Avg Hourly Generation</div><div class="card-value" id="c-avg">—</div><div class="card-unit">kWh/hr</div></div>
+        <div class="card"><div class="card-icon">🏭</div><div class="card-label">Installations</div><div class="card-value" id="c-inst">—</div><div class="card-unit">sites</div></div>
+        <div class="card card-warn"><div class="card-icon">📉</div><div class="card-label">Lowest Performing</div><div class="card-value" id="c-low">—</div><div class="card-unit">installation</div></div>
+        <div class="card card-danger"><div class="card-icon">⚠️</div><div class="card-label">Detected Anomalies</div><div class="card-value" id="c-anom">—</div><div class="card-unit">events</div></div>
+        <div class="card card-success"><div class="card-icon">🤖</div><div class="card-label">Model R² Score</div><div class="card-value" id="c-r2">—</div><div class="card-unit">accuracy</div></div>
+      </div>
+    </section>
+
+    <!-- ── GENERATION TRENDS ── -->
+    <section id="generation" class="section">
+      <h2 class="section-title">📈 Generation Trends</h2>
+      <div class="charts-row">
+        <div class="chart-card wide"><h3>Daily Generation Trend</h3><canvas id="dailyChart"></canvas></div>
+        <div class="chart-card"><h3>Monthly Generation</h3><canvas id="monthlyChart"></canvas></div>
+      </div>
+      <div class="charts-row">
+        <div class="chart-card"><h3>Hourly Pattern (Avg)</h3><canvas id="hourlyChart"></canvas></div>
+        <div class="chart-card"><h3>Seasonal Comparison</h3><canvas id="seasonalChart"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ── INSTALLATIONS ── -->
+    <section id="installations" class="section">
+      <h2 class="section-title">🏭 Installation Performance</h2>
+      <div class="charts-row">
+        <div class="chart-card"><h3>Average Generation by Installation</h3><canvas id="instChart"></canvas></div>
+        <div class="chart-card">
+          <h3>Performance Table</h3>
+          <div class="table-wrap">
+            <table id="instTable" class="data-table">
+              <thead><tr><th>Installation</th><th>Avg (kWh)</th><th>Total (kWh)</th><th>Max (kWh)</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── WEATHER ANALYSIS ── -->
+    <section id="weather" class="section">
+      <h2 class="section-title">🌤️ Weather Impact Analysis</h2>
+      <div class="charts-row">
+        <div class="chart-card"><h3>Sunlight vs Generation</h3><canvas id="sunScatter"></canvas></div>
+        <div class="chart-card"><h3>Temperature vs Generation</h3><canvas id="tempScatter"></canvas></div>
+      </div>
+      <div class="charts-row">
+        <div class="chart-card"><h3>Cloud Cover vs Generation</h3><canvas id="cloudScatter"></canvas></div>
+        <div class="chart-card"><h3>Panel Condition vs Generation</h3><canvas id="panelChart"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ── ANOMALIES ── -->
+    <section id="anomalies" class="section">
+      <h2 class="section-title">⚠️ Anomaly Monitoring</h2>
+      <div class="table-wrap">
+        <table id="anomalyTable" class="data-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th><th>Installation</th>
+              <th>Actual (kWh)</th><th>Expected (kWh)</th>
+              <th>Difference</th><th>Severity</th><th>Reason</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── ML MODEL ── -->
+    <section id="model" class="section">
+      <h2 class="section-title">🤖 XGBoost Model Performance</h2>
+      <div class="cards-grid metrics-cards">
+        <div class="card"><div class="card-label">MAE</div><div class="card-value" id="m-mae">—</div><div class="card-unit">kWh</div></div>
+        <div class="card"><div class="card-label">MSE</div><div class="card-value" id="m-mse">—</div><div class="card-unit">kWh²</div></div>
+        <div class="card"><div class="card-label">RMSE</div><div class="card-value" id="m-rmse">—</div><div class="card-unit">kWh</div></div>
+        <div class="card card-success"><div class="card-label">R² Score</div><div class="card-value" id="m-r2">—</div><div class="card-unit">accuracy</div></div>
+      </div>
+      <div class="charts-row">
+        <div class="chart-card wide"><h3>Actual vs Predicted Generation</h3><canvas id="avpChart"></canvas></div>
+        <div class="chart-card"><h3>Feature Importance</h3><canvas id="fiChart"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ── PREDICTION TOOL ── -->
+    <section id="predict" class="section">
+      <h2 class="section-title">🔮 Solar Generation Predictor</h2>
+      <div class="predict-container">
+        <form id="predictForm" class="predict-form" onsubmit="submitPrediction(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Installation ID</label>
+              <select id="p-inst" required>
+                <option value="">Select…</option>
+                <option>INS_A</option><option>INS_B</option>
+                <option>INS_C</option><option>INS_D</option><option>INS_E</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Sunlight (W/m²)</label>
+              <input type="number" id="p-sun" min="0" max="1200" step="1" placeholder="0–1200" required />
+            </div>
+            <div class="form-group">
+              <label>Temperature (°C)</label>
+              <input type="number" id="p-temp" min="-20" max="60" step="0.1" placeholder="-20 to 60" required />
+            </div>
+            <div class="form-group">
+              <label>Cloud Cover (%)</label>
+              <input type="number" id="p-cloud" min="0" max="100" step="1" placeholder="0–100" required />
+            </div>
+            <div class="form-group">
+              <label>Panel Condition</label>
+              <select id="p-panel" required>
+                <option value="">Select…</option>
+                <option>Good</option><option>Moderate</option><option>Poor</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Hour (0–23)</label>
+              <input type="number" id="p-hour" min="0" max="23" step="1" placeholder="0–23" required />
+            </div>
+            <div class="form-group">
+              <label>Day of Week (0=Mon)</label>
+              <input type="number" id="p-dow" min="0" max="6" step="1" placeholder="0–6" required />
+            </div>
+            <div class="form-group">
+              <label>Month (1–12)</label>
+              <input type="number" id="p-month" min="1" max="12" step="1" placeholder="1–12" required />
+            </div>
+            <div class="form-group">
+              <label>Season</label>
+              <select id="p-season" required>
+                <option value="">Select…</option>
+                <option value="0">Winter (0)</option>
+                <option value="1">Spring (1)</option>
+                <option value="2">Summer (2)</option>
+                <option value="3">Autumn (3)</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="predict-btn">⚡ Predict Generation</button>
+        </form>
+        <div id="predict-result" class="predict-result hidden">
+          <div class="result-icon">☀️</div>
+          <div class="result-label">Predicted Solar Generation</div>
+          <div class="result-value" id="pred-value">—</div>
+          <div class="result-unit">kWh</div>
+        </div>
+        <div id="predict-error" class="predict-error hidden"></div>
+      </div>
+    </section>
+
+    <!-- ── DATA QUALITY ── -->
+    <section id="data-quality" class="section">
+      <h2 class="section-title">🧹 Data Quality Report</h2>
+      <div class="cards-grid">
+        <div class="card"><div class="card-label">Original Records</div><div class="card-value" id="dq-orig">—</div></div>
+        <div class="card"><div class="card-label">Missing Values</div><div class="card-value" id="dq-miss">—</div></div>
+        <div class="card card-warn"><div class="card-label">Duplicates Removed</div><div class="card-value" id="dq-dup">—</div></div>
+        <div class="card card-warn"><div class="card-label">Invalid Values Fixed</div><div class="card-value" id="dq-inv">—</div></div>
+        <div class="card card-success"><div class="card-label">Cleaned Records</div><div class="card-value" id="dq-clean">—</div></div>
+        <div class="card card-success"><div class="card-label">Missing After Clean</div><div class="card-value" id="dq-miss2">—</div></div>
+      </div>
+    </section>
+
+    <!-- ── INSIGHTS ── -->
+    <section id="insights" class="section">
+      <h2 class="section-title">💡 Key Insights &amp; Action Plan</h2>
+      <div class="insights-grid">
+        <div class="insights-box">
+          <h3>Key Insights</h3>
+          <ul id="insights-list" class="insights-list"></ul>
+        </div>
+        <div class="insights-box">
+          <h3>Practical Action Plan</h3>
+          <ol id="action-list" class="action-list"></ol>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Solar Energy Analysis Dashboard · Sample Data · Built with Flask + XGBoost + Chart.js
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

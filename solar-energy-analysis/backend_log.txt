@@ -1,0 +1,80 @@
+Starting Solar Energy API...
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\matplotlib\\backends\\__init__.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\sympy\\matrices\\exceptions.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\httpx\\_auth.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\httpx\\__version__.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\shellingham\\__init__.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\transformers\\models\\camembert\\__init__.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\transformers\\models\\exaone_moe\\modeling_exaone_moe.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\transformers\\models\\layoutlm\\modeling_layoutlm.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\transformers\\models\\ovis2\\modeling_ovis2.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\transformers\\models\\seamless_m4t_v2\\modeling_seamless_m4t_v2.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+ * Detected change in 'C:\\Users\\rizz1\\AppData\\Roaming\\Python\\Python314\\site-packages\\transformers\\models\\xlm_roberta_xl\\configuration_xlm_roberta_xl.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+127.0.0.1 - - [29/Sep/2026 00:39:39] "GET /api/summary HTTP/1.1" 200 -
+ * Detected change in 'C:\\Python314\\Lib\\pathlib\\__init__.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+127.0.0.1 - - [29/Sep/2026 00:44:47] "GET /api/model-metrics HTTP/1.1" 200 -
+127.0.0.1 - - [29/Sep/2026 00:45:11] "GET /api/installation-performance HTTP/1.1" 200 -
+127.0.0.1 - - [29/Sep/2026 00:45:59] "GET /api/insights HTTP/1.1" 200 -
+ * Detected change in 'c:\\Users\\rizz1\\OneDrive\\\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\\SOLAR ENERGY-DS\\solar-energy-analysis\\backend\\app.py', reloading
+Starting Solar Energy API...
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 188-757-322
+127.0.0.1 - - [29/Sep/2026 00:46:22] "GET /api/cleaning-summary HTTP/1.1" 200 -
+127.0.0.1 - - [29/Sep/2026 00:46:27] "GET /api/feature-importance HTTP/1.1" 200 -
